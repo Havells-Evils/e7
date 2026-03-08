@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TERRA · modern culinary experience</title>
+  <!-- Font Awesome 6 (free) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google fonts: clean & elegant -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..600&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* ----------------------------------------------
+       COLOR THEME (no black, no gold)
+       deep teal, ocean blue, soft cream, terracotta,
+       sage green, natural wood textures
+    ---------------------------------------------- */
+    :root {
+      --cream: #faf3e8;        /* soft background */
+      --deep-teal: #0f4c5c;     /* headings, buttons */
+      --ocean-blue: #2c7f8f;    /* accents, hover */
+      --terracotta: #c96e4b;     /* highlights, buttons */
+      --sage: #7d9d7c;           /* details, borders */
+      --wood-light: #e0cdb7;     /* wood texture simulation */
+      --wood-dark: #b28b6d;      /* footer / cards */
+      --text-dark: #2e3e3b;       /* dark teal/grey – not black */
+      --text-soft: #4e5e5b;       /* softer text */
+      --shadow: 0 20px 30px -10px rgba(46, 62, 59, 0.15);
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background-color: var(--cream);
+      color: var(--text-dark);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3 {
+      font-family: "Playfair Display", serif;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+
+    .section {
+      padding: 5rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .section-title {
+      font-size: 2.8rem;
+      margin-bottom: 1.5rem;
+      color: var(--deep-teal);
+      position: relative;
+      display: inline-block;
+    }
+    .section-title:after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 80px;
+      height: 3px;
+      background: var(--terracotta);
+    }
+
+    /* navigation – wood texture effect */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 3rem;
+      background: rgba(224, 205, 183, 0.6); /* wood base */
+      backdrop-filter: blur(8px);
+      box-shadow: 0 2px 15px rgba(120, 90, 70, 0.1);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--sage);
+    }
+
+    .logo {
+      font-family: "Playfair Display", serif;
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--deep-teal);
+      letter-spacing: -0.02em;
+    }
+    .logo span {
+      color: var(--terracotta);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      align-items: center;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 500;
+      color: var(--text-dark);
+      transition: 0.2s;
+      font-size: 1.05rem;
+    }
+    .nav-links a:hover {
+      color: var(--terracotta);
+    }
+    .nav-reserve {
+      background: var(--deep-teal);
+      color: white !important;
+      padding: 0.5rem 1.8rem;
+      border-radius: 40px;
+      border: 1px solid var(--ocean-blue);
+    }
+    .nav-reserve:hover {
+      background: var(--ocean-blue);
+      color: white !important;
+    }
+
+    /* mobile menu – simplified for demo */
+    .menu-toggle {
+      display: none;
+      font-size: 1.8rem;
+      color: var(--deep-teal);
+    }
+
+    /* hero canvas + content */
+    .hero {
+      height: 100vh;
+      min-height: 700px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--text-dark);
+      margin-top: 70px; /* fixed nav */
+    }
+    #hero-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 5;
+      max-width: 900px;
+      padding: 2rem;
+      background: rgba(250, 243, 232, 0.4);
+      backdrop-filter: blur(6px);
+      border-radius: 40px;
+      border: 1px solid rgba(125, 157, 124, 0.3);
+    }
+    .hero h1 {
+      font-size: 5rem;
+      line-height: 1.1;
+      color: var(--deep-teal);
+      text-shadow: 0 4px 12px rgba(255, 255, 255, 0.6);
+    }
+    .hero p {
+      font-size: 1.3rem;
+      margin: 1.5rem 0 2.5rem;
+      color: var(--text-soft);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .btn-group {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+    }
+    .btn {
+      padding: 1rem 2.8rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: 0.25s;
+      text-decoration: none;
+      display: inline-block;
+      border: 2px solid transparent;
+    }
+    .btn-primary {
+      background: var(--deep-teal);
+      color: white;
+      box-shadow: 0 10px 20px -8px var(--deep-teal);
+    }
+    .btn-primary:hover {
+      background: var(--ocean-blue);
+      transform: scale(1.03);
+    }
+    .btn-secondary {
+      background: transparent;
+      border: 2px solid var(--terracotta);
+      color: var(--terracotta);
+    }
+    .btn-secondary:hover {
+      background: var(--terracotta);
+      color: white;
+    }
+
+    /* story section */
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .story-text p {
+      font-size: 1.2rem;
+      color: var(--text-soft);
+      margin: 1.5rem 0;
+    }
+    .story-visual {
+      background: linear-gradient(145deg, var(--wood-light), #d7bfa5);
+      padding: 2rem;
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      justify-content: center;
+      background-image: radial-gradient(circle at 20% 30%, rgba(201,110,75,0.1) 0%, transparent 30%);
+    }
+    .story-visual i {
+      font-size: 5rem;
+      color: var(--deep-teal);
+      background: rgba(255,255,240,0.7);
+      width: 120px;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      box-shadow: 0 8px 12px rgba(0,0,0,0.05);
+      transition: 0.3s;
+    }
+    .story-visual i:hover {
+      transform: scale(1.05);
+      color: var(--terracotta);
+    }
+
+    /* menu filter & cards */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 3rem 0 2rem;
+    }
+    .filter-btn {
+      background: transparent;
+      border: 1px solid var(--sage);
+      padding: 0.6rem 2rem;
+      border-radius: 40px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.2s;
+      color: var(--text-dark);
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--sage);
+      color: white;
+      border-color: var(--sage);
+    }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+    .dish-card {
+      background: white;
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: 0.25s ease;
+      cursor: pointer;
+      border: 1px solid rgba(201, 110, 75, 0.1);
+    }
+    .dish-card:hover {
+      transform: scale(1.02) translateY(-8px);
+      box-shadow: 0 30px 40px -15px var(--sage);
+    }
+    .card-img {
+      height: 200px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    .card-img i {
+      position: absolute;
+      bottom: 10px;
+      right: 15px;
+      font-size: 2rem;
+      color: rgba(255,255,240,0.9);
+      text-shadow: 0 2px 8px var(--deep-teal);
+    }
+    .card-info {
+      padding: 1.8rem 1.5rem 1.5rem;
+    }
+    .card-info h3 {
+      font-size: 1.8rem;
+      color: var(--deep-teal);
+    }
+    .card-info p {
+      color: var(--text-soft);
+      margin: 0.6rem 0;
+    }
+    .price {
+      font-weight: 700;
+      color: var(--terracotta);
+      font-size: 1.5rem;
+      font-family: "Playfair Display", serif;
+    }
+
+    /* signature dish */
+    .signature-row {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+    }
+    .signature-card {
+      flex: 1 1 280px;
+      background: linear-gradient(135deg, #fff7ed, #fae9da);
+      border-radius: 40px;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      transition: 0.4s;
+      transform-style: preserve-3d;
+      transform: perspective(1000px) rotateY(0deg);
+      border: 1px solid rgba(125,157,124,0.3);
+    }
+    .signature-card:hover {
+      transform: perspective(1000px) rotateY(4deg) rotateX(1deg);
+      background: #fffbf5;
+    }
+    .signature-card i {
+      font-size: 3.5rem;
+      color: var(--terracotta);
+      margin-bottom: 1rem;
+    }
+    .chef-note {
+      font-style: italic;
+      color: var(--deep-teal);
+      background: rgba(201,110,75,0.08);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      margin: 1rem 0;
+    }
+    .pairing {
+      color: var(--sage);
+      font-weight: 500;
+    }
+
+    /* gallery masonry style */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-auto-rows: 250px;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .gallery-item {
+      border-radius: 30px;
+      background: var(--wood-light);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+      transition: 0.3s;
+      background-size: cover;
+      background-position: center;
+    }
+    .gallery-item.large {
+      grid-row: span 2;
+      grid-column: span 2;
+    }
+    .gallery-item:hover {
+      transform: scale(1.02);
+      box-shadow: 0 25px 35px -10px var(--deep-teal);
+    }
+    .gallery-item .overlay {
+      position: absolute;
+      bottom: 0;
+      background: linear-gradient(transparent, rgba(15,76,92,0.7));
+      color: white;
+      width: 100%;
+      padding: 1.5rem 1rem 1rem;
+      transform: translateY(100%);
+      transition: 0.3s;
+    }
+    .gallery-item:hover .overlay {
+      transform: translateY(0);
+    }
+
+    /* testimonial carousel */
+    .carousel-container {
+      position: relative;
+      overflow: hidden;
+      padding: 2rem 0;
+    }
+    .testimonial-track {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+    .testimonial-card {
+      flex: 0 0 350px;
+      margin-right: 2rem;
+      background: white;
+      border-radius: 30px;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      border-left: 6px solid var(--terracotta);
+    }
+    .stars {
+      color: var(--terracotta);
+      margin: 0.8rem 0;
+    }
+    .carousel-btns {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .carousel-btns button {
+      background: var(--deep-teal);
+      border: none;
+      color: white;
+      width: 48px;
+      height: 48px;
+      border-radius: 30px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .carousel-btns button:hover {
+      background: var(--ocean-blue);
+    }
+
+    /* reservation + contact */
+    .reserve-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 3rem;
+      background: rgba(224,205,183,0.3);
+      border-radius: 50px;
+      padding: 3rem;
+      backdrop-filter: blur(4px);
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 1rem 1.2rem;
+      border: 2px solid transparent;
+      border-radius: 50px;
+      font-family: "Inter", sans-serif;
+      background: white;
+      transition: 0.2s;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--sage);
+    }
+    .reserve-btn {
+      background: var(--deep-teal);
+      color: white;
+      border: none;
+      padding: 1rem 3rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+    .contact-info i {
+      color: var(--terracotta);
+      margin-right: 0.8rem;
+    }
+    .map-placeholder {
+      background: var(--wood-light);
+      height: 200px;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--deep-teal);
+      font-size: 1.2rem;
+      margin-top: 1rem;
+    }
+
+    /* footer */
+    footer {
+      background: var(--wood-dark);
+      color: #f9efe3;
+      padding: 3rem 3rem 1.5rem;
+      border-top: 5px solid var(--sage);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 3rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .footer-logo {
+      font-family: "Playfair Display", serif;
+      font-size: 2.2rem;
+      color: var(--cream);
+    }
+    .footer-grid a {
+      color: #f0e0d0;
+      text-decoration: none;
+      display: block;
+      margin: 0.5rem 0;
+    }
+    .newsletter input {
+      padding: 0.8rem;
+      border-radius: 50px;
+      border: none;
+      width: 70%;
+    }
+    .newsletter button {
+      padding: 0.8rem 1.5rem;
+      border-radius: 50px;
+      background: var(--terracotta);
+      border: none;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .copyright {
+      text-align: center;
+      margin-top: 4rem;
+      color: #d4c0ad;
+    }
+
+    /* responsive */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .menu-toggle { display: block; }
+      .hero h1 { font-size: 3.5rem; }
+      .story-grid, .reserve-grid { grid-template-columns: 1fr; }
+      .gallery-item.large { grid-row: span 1; grid-column: span 1; }
+    }
+    @media (max-width: 600px) {
+      .section { padding: 3rem 1.5rem; }
+      .btn-group { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- fixed navigation with wood feel -->
+  <nav>
+    <div class="logo">TERRA<span>.</span></div>
+    <div class="nav-links">
+      <a href="#">Home</a>
+      <a href="#story">Story</a>
+      <a href="#menu">Menu</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#reserve" class="nav-reserve">Reserve</a>
+    </div>
+    <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+  </nav>
+
+  <!-- hero with 3D floating particles (canvas) -->
+  <section class="hero" id="home">
+    <canvas id="hero-canvas"></canvas>
+    <div class="hero-content">
+      <h1>Where Flavor Meets Experience.</h1>
+      <p>Fresh ingredients, culinary creativity, and warm hospitality — welcome to a modern dining journey.</p>
+      <div class="btn-group">
+        <a href="#menu" class="btn btn-primary">Explore Menu</a>
+        <a href="#reserve" class="btn btn-secondary">Reserve a Table</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- story section -->
+  <section class="section" id="story">
+    <h2 class="section-title">Our story</h2>
+    <div class="story-grid">
+      <div class="story-text">
+        <p>Inspired by the rhythm of nature and the artistry of cooking, TERRA was born from a desire to reconnect people with honest, vibrant food. Our kitchen blends local ingredients with global techniques.</p>
+        <p>Every dish tells a story — from the terracotta soils of our vegetable garden to the deep teal of the ocean on our coast. We believe dining should be an experience that lingers.</p>
+        <p><i class="fas fa-leaf" style="color: var(--sage);"></i>  Seasonal · Sustainable · Soulful</p>
+      </div>
+      <div class="story-visual">
+        <i class="fas fa-carrot"></i>
+        <i class="fas fa-utensils"></i>
+        <i class="fas fa-wine-bottle"></i>
+        <i class="fas fa-cheese"></i>
+        <i class="fas fa-oven"></i>
+        <i class="fas fa-fish"></i>
+      </div>
+    </div>
+  </section>
+
+  <!-- dynamic menu section -->
+  <section class="section" id="menu">
+    <h2 class="section-title">Seasonal menu</h2>
+    <div class="filter-bar" id="filter-bar">
+      <button class="filter-btn active" data-category="all">All</button>
+      <button class="filter-btn" data-category="small">Small Plates</button>
+      <button class="filter-btn" data-category="main">Main Dishes</button>
+      <button class="filter-btn" data-category="dessert">Desserts</button>
+      <button class="filter-btn" data-category="drinks">Signature Drinks</button>
+    </div>
+    <div class="menu-grid" id="menu-grid"></div>
+  </section>
+
+  <!-- signature dish showcase -->
+  <section class="section">
+    <h2 class="section-title">Signature dishes</h2>
+    <div class="signature-row">
+      <div class="signature-card">
+        <i class="fas fa-fire"></i>
+        <h3>Ember‑roasted carrots</h3>
+        <p>Heirloom carrots, smoked labneh, dukkah, honey</p>
+        <div class="chef-note">Chef's note: “reminds me of coastal fires”</div>
+        <div class="pairing"><i class="fas fa-wine-glass-alt"></i> Pair with sage & pear cocktail</div>
+      </div>
+      <div class="signature-card">
+        <i class="fas fa-fish"></i>
+        <h3>Ocean crudo</h3>
+        <p>Hamachi, blood orange, olive oil, sea fennel</p>
+        <div class="chef-note">Chef's note: “bright as a mediterranean morning”</div>
+        <div class="pairing"><i class="fas fa-wine-glass-alt"></i> Pair with albariño</div>
+      </div>
+      <div class="signature-card">
+        <i class="fas fa-cake"></i>
+        <h3>Terracotta chocolate</h3>
+        <p>Dark mousse, olive oil gelato, salt crumb</p>
+        <div class="chef-note">Chef's note: “earthy & deep”</div>
+        <div class="pairing"><i class="fas fa-coffee"></i> Pair with chicory coffee</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- gallery -->
+  <section class="section" id="gallery">
+    <h2 class="section-title">Atmosphere</h2>
+    <div class="gallery-grid">
+      <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0e?w=400');"><div class="overlay">Dining hall</div></div>
+      <div class="gallery-item large" style="background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=500');"><div class="overlay">Chef's table</div></div>
+      <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=400');"><div class="overlay">Garden terrace</div></div>
+      <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400');"><div class="overlay">Open kitchen</div></div>
+      <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400');"><div class="overlay">Private event</div></div>
+    </div>
+  </section>
+
+  <!-- testimonials carousel -->
+  <section class="section">
+    <h2 class="section-title">Guest experiences</h2>
+    <div class="carousel-container">
+      <div class="testimonial-track" id="testimonialTrack">
+        <div class="testimonial-card"><i class="fas fa-quote-left" style="color:var(--terracotta);"></i><p>Incredible atmosphere and the sage cocktail is unforgettable.</p><div class="stars">★★★★★</div><h4>— Morgan L.</h4></div>
+        <div class="testimonial-card"><i class="fas fa-quote-left" style="color:var(--terracotta);"></i><p>The tasting menu took us on a journey. Every plate a surprise.</p><div class="stars">★★★★★</div><h4>— Jamie T.</h4></div>
+        <div class="testimonial-card"><i class="fas fa-quote-left" style="color:var(--terracotta);"></i><p>Warm service, stunning interior – felt like a escape.</p><div class="stars">★★★★☆</div><h4>— Casey W.</h4></div>
+        <div class="testimonial-card"><i class="fas fa-quote-left" style="color:var(--terracotta);"></i><p>Best seafood crudo I’ve ever had. Pairing was spot on.</p><div class="stars">★★★★★</div><h4>— Alex P.</h4></div>
+      </div>
+    </div>
+    <div class="carousel-btns">
+      <button id="prevTestimonial"><i class="fas fa-arrow-left"></i></button>
+      <button id="nextTestimonial"><i class="fas fa-arrow-right"></i></button>
+    </div>
+  </section>
+
+  <!-- reservation + contact -->
+  <section class="section" id="reserve">
+    <h2 class="section-title">Reserve your table</h2>
+    <div class="reserve-grid">
+      <div class="reserve-form">
+        <form id="reserveForm">
+          <div class="form-group"><input type="text" placeholder="Full name" required></div>
+          <div class="form-group"><input type="email" placeholder="Email address" required></div>
+          <div class="form-group"><input type="tel" placeholder="Phone number"></div>
+          <div class="form-group"><input type="number" placeholder="Number of guests" min="1" required></div>
+          <div class="form-group"><input type="date" required></div>
+          <div class="form-group"><input type="time" required></div>
+          <button type="submit" class="reserve-btn">Complete reservation</button>
+          <p id="reserveConfirm" style="margin-top:1rem; color:var(--deep-teal);"></p>
+        </form>
+      </div>
+      <div class="contact-info">
+        <p><i class="fas fa-phone-alt"></i> (555) 237-8923</p>
+        <p><i class="fas fa-envelope"></i> hello@terra.dining</p>
+        <p><i class="fas fa-map-pin"></i> 27 Bayside Ave, Sausalito</p>
+        <div class="map-placeholder"><i class="fas fa-map-marked-alt"></i> Open street view</div>
+        <p style="margin-top:2rem;"><i class="fas fa-clock"></i> Tue–Sun 5pm – 11pm</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- footer -->
+  <footer>
+    <div class="footer-grid">
+      <div><div class="footer-logo">TERRA.</div><p style="margin-top:1rem;">Where flavor meets experience.</p></div>
+      <div><h4>Explore</h4><a href="#">Home</a><a href="#story">Story</a><a href="#menu">Menu</a><a href="#gallery">Gallery</a></div>
+      <div><h4>Contact</h4><a href="#">+1 555 237 8923</a><a href="#">reserve@terra.dining</a><div class="social-icons" style="font-size:1.5rem;"><i class="fab fa-instagram"></i> <i class="fab fa-facebook"></i></div></div>
+      <div class="newsletter"><h4>Newsletter</h4><input type="email" placeholder="your@email.com"><button>→</button></div>
+    </div>
+    <div class="copyright">© 2025 TERRA · designed with earth & ocean</div>
+  </footer>
+
+  <script>
+    (function() {
+      // ---------- hero floating particles (3D feel) ----------
+      const canvas = document.getElementById('hero-canvas');
+      const ctx = canvas.getContext('2d');
+      let width, height;
+      let particles = [];
+
+      function initParticles() {
+        width = canvas.clientWidth;
+        height = canvas.clientHeight;
+        canvas.width = width;
+        canvas.height = height;
+        const particleCount = 70;
+        particles = [];
+        for (let i = 0; i < particleCount; i++) {
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            radius: 4 + Math.random() * 10,
+            speedX: (Math.random() - 0.5) * 0.3,
+            speedY: (Math.random() - 0.5) * 0.2,
+            color: `rgba(${Math.random() > 0.5 ? '201,110,75' : '15,76,92'}, ${0.2 + Math.random()*0.2})`
+          });
+        }
+      }
+
+      function animateParticles() {
+        ctx.clearRect(0, 0, width, height);
+        particles.forEach(p => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, 2*Math.PI);
+          ctx.fillStyle = p.color;
+          ctx.fill();
+          p.x += p.speedX;
+          p.y += p.speedY;
+          if (p.x < 0) p.x = width;
+          if (p.x > width) p.x = 0;
+          if (p.y < 0) p.y = height;
+          if (p.y > height) p.y = 0;
+        });
+        requestAnimationFrame(animateParticles);
+      }
+
+      window.addEventListener('resize', () => {
+        initParticles();
+      });
+      initParticles();
+      animateParticles();
+
+      // ---------- dynamic menu items ----------
+      const menuData = [
+        { name: 'Grilled octopus', desc: 'smoked paprika, lemon, olive oil', price: 22, category: 'small', img: 'octopus', icon: '🦑' },
+        { name: 'Burrata & heirloom', desc: 'basil, aged balsamico', price: 18, category: 'small', img: 'burrata', icon: '🧀' },
+        { name: 'Wagyu beef tartare', desc: 'capers, quail egg, sourdough', price: 26, category: 'small', img: 'tartare', icon: '🥩' },
+        { name: 'Sea bass en papillote', desc: 'fennel, citrus, herbs', price: 38, category: 'main', img: 'seabass', icon: '🐟' },
+        { name: 'Saffron risotto', desc: 'carnaroli, bone marrow', price: 32, category: 'main', img: 'risotto', icon: '🍚' },
+        { name: 'Wood‑roasted duck', desc: 'cherry glaze, chicory', price: 42, category: 'main', img: 'duck', icon: '🦆' },
+        { name: 'Olive oil cake', desc: 'rosemary, sea salt', price: 14, category: 'dessert', img: 'cake', icon: '🍰' },
+        { name: 'Dark chocolate cremeux', desc: 'olive oil, maldon', price: 16, category: 'dessert', img: 'choco', icon: '🍫' },
+        { name: 'Sage & pear cocktail', desc: 'vodka, honey, lime', price: 15, category: 'drinks', icon: '🍐' },
+        { name: 'Smoked old fashioned', desc: 'mezcal, bitters, orange', price: 18, category: 'drinks', icon: '🥃' }
+      ];
+
+      const menuGrid = document.getElementById('menu-grid');
+      function renderMenu(category = 'all') {
+        const filtered = category === 'all' ? menuData : menuData.filter(item => item.category === category);
+        menuGrid.innerHTML = filtered.map(item => `
+          <div class="dish-card">
+            <div class="card-img" style="background: #d5c3b0; display: flex; align-items: center; justify-content: center; font-size: 4rem;">${item.icon || '🍽️'}</div>
+            <div class="card-info">
+              <h3>${item.name}</h3>
+              <p>${item.desc}</p>
+              <span class="price">$${item.price}</span>
+            </div>
+          </div>
+        `).join('');
+      }
+      renderMenu();
+
+      // filter buttons
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', e => {
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          renderMenu(btn.dataset.category);
+        });
+      });
+
+      // ---------- testimonial carousel ----------
+      const track = document.getElementById('testimonialTrack');
+      const prev = document.getElementById('prevTestimonial');
+      const next = document.getElementById('nextTestimonial');
+      let pos = 0;
+      const cardWidth = 350 + 32; // width + margin-right
+      const max = track.children.length - 1;
+
+      next.addEventListener('click', () => {
+        if (pos < max) pos++;
+        else pos = 0;
+        track.style.transform = `translateX(-${pos * cardWidth}px)`;
+      });
+      prev.addEventListener('click', () => {
+        if (pos > 0) pos--;
+        else pos = max;
+        track.style.transform = `translateX(-${pos * cardWidth}px)`;
+      });
+
+      // ---------- reservation confirmation ----------
+      document.getElementById('reserveForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        document.getElementById('reserveConfirm').innerText = '✓ Your request has been received. We’ll confirm shortly.';
+        this.reset();
+      });
+
+      // ---------- smooth scroll for anchor links ----------
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if(target) target.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
